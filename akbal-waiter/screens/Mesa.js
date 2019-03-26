@@ -14,6 +14,10 @@ export default class Mesa extends React.Component {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
   }
 
+  componentDidCathch() {
+    console.log(this.state.mesa);
+  }
+
   handleBackPress = () => {
     this.props.setVista(0);
     return true;
@@ -22,12 +26,12 @@ export default class Mesa extends React.Component {
   render() {
     return (
       <View>
-        <View style={[styles.container, {width: this.appear}]}>
+        <View style={styles.container}>
           <Text style={{fontSize: 20, textAlign: 'center', marginBottom: 5}}>Mesa {this.props.mesa.nombre}</Text>
         </View>
-        <View style={styles.container}>
-          {this.props.mesa.elementos.map(elemento => (
-            <List.Item title={elemento.producto} descripcion={elemento.notas}/>
+        <View style={[styles.container, {padding: 0}]}>
+          {this.props.mesa.elementos.map((elemento, index) => (
+            <List.Item key={index} title={elemento.producto.producto} description={elemento.cantidad}/>
           ))}
         </View>
         <Button theme={Theme} mode="contained" onPress={() => this.props.setVista(2)}>Agregar</Button>
@@ -41,6 +45,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 5,
     padding: 5,
+    marginBottom: 5,
     overflow: 'hidden'
   }
 });

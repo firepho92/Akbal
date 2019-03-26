@@ -6,6 +6,8 @@ import Fuse from 'fuse.js';
 import Theme from '../Theme';
 import { ScrollView } from 'react-native-gesture-handler';
 
+import Modal from './Modal.js';
+
 import AppContext from '../context/AppContext';
 
 export default class Comandar extends React.Component {
@@ -83,7 +85,7 @@ export default class Comandar extends React.Component {
   render() {
     return (
       <View>
-        {this.state.modal ? <Modal modal={this.modal} elemento={this.state.producto}/> : null}
+        {this.state.modal ? <Modal modal={this.modal} elemento={this.state.producto} mesa={this.props.mesa}/> : null}
         <View style={styles.container}>
           <Text style={{fontSize: 20, textAlign: 'center', marginBottom: 5}}>{'Mesa: ' + this.props.mesa.nombre}</Text>
           <Searchbar
@@ -138,62 +140,6 @@ class Producto extends React.Component {
   }
 }
 
-class Modal extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      cantidad: '',
-      nota: ''
-    }
-    this.fade = new Animated.Value(0);
-  }
-
-  componentDidMount() {
-    this.fadeIn();
-  }
-
-  fadeIn = () => {
-    this.fade.setValue(0);
-     Animated.timing(
-       this.fade,
-       {
-         toValue: 1,
-         duration: 175,
-       }
-     ).start(); 
-  }
-
-  render() {
-    return (
-      <Animated.View style={[styles.modalBase, {opacity: this.fade}]} onPress={() =>  this.props.modal()}>
-        <View style={styles.modal}>
-          <View style={styles.modalTitle}><Text style={{fontSize: 20, textAlign: 'center', paddingBottom: 10}}>{this.props.elemento.producto}</Text></View>
-          <Divider/>
-          <View style={{paddingTop: 10}}>
-            <TextInput
-              mode='outlined'
-              theme={Theme}
-              label='Cantidad'
-              value={this.state.cantidad}
-              onChangeText={cantidad => this.setState({ cantidad })}
-            />
-          </View>
-          <View style={{paddingTop: 10, paddingBottom: 10}}>
-            <TextInput
-              keyboardType='numeric'
-              mode='outlined'
-              theme={Theme}
-              label='Nota'
-              value={this.state.nota}
-              onChangeText={nota => this.setState({ nota })}
-            />
-          </View>
-          <Button color="#3f51b5" mode="contained" onPress={() => this.props.modal()}>Aceptar</Button>
-        </View>
-      </Animated.View>
-    );
-  }
-}
 
 const styles = StyleSheet.create({
   container: {

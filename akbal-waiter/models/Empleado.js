@@ -5,7 +5,6 @@ export default class Empleado {
 	constructor(nombre, telefono, cargo) {
 		this.nombre = nombre;
 		this.telefono = telefono;
-		this.cargo = cargo;
 	}
 
 	async readEmpleados() {

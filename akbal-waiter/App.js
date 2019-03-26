@@ -1,6 +1,11 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
+console.ignoredYellowBox = ['Remote debugger'];
+import { YellowBox } from 'react-native';
+YellowBox.ignoreWarnings([
+    'Unrecognized WebSocket connection option(s) `agent`, `perMessageDeflate`, `pfx`, `key`, `passphrase`, `cert`, `ca`, `ciphers`, `rejectUnauthorized`. Did you mean to put these under `headers`?'
+]);
 
 import Welcome from './screens/Welcome';
 import Main from './screens/Main';

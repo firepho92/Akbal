@@ -22,9 +22,7 @@ create table if not exists Empleados(
 	id_empleado int not null auto_increment,
 	nombre varchar(120),
 	telefono varchar(10),
-	cargo int,
-	primary key(id_empleado),
-	foreign key(cargo) references Cargos(id_cargo)
+	primary key(id_empleado)
 );
 
 create table if not exists Caja(
@@ -44,6 +42,7 @@ create table if not exists Administradores(
 create table if not exists Productos(
 	id_producto int not null auto_increment,
 	producto varchar(50),
+	stock int,
 	descripcion varchar(140),
 	precio_produccion float,
 	precio_venta float,

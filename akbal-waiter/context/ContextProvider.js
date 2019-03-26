@@ -36,8 +36,16 @@ class ContextProvider extends Component {
     });
   }
 
-  insertarElemento = (elemento) => {
-    
+  actualizarMesa = (nuevaMesa) => {
+    let mesas = this.state.mesas;
+    mesas = mesas.map(mesa => {
+      if(mesa.nombre === nuevaMesa.nombre)
+        return nuevaMesa;
+      return mesa;
+    });
+    this.setState({
+      mesas
+    });
   }
 
   agregarMesa = (nombre, mesero) => {
@@ -102,6 +110,7 @@ class ContextProvider extends Component {
       <AppContext.Provider value={{
         state: this.state,
         agregarMesa: this.agregarMesa,
+        actualizarMesa: this.actualizarMesa,
         handleToggle: this.handleToggle,
         estaSeleccionado: this.estaSeleccionado,
         mostrarAlerta: this.mostrarAlerta,

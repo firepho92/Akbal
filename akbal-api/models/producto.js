@@ -5,8 +5,9 @@ var db = new DB();
 var connection = db.getConnection();
 
 module.exports = class Productos {
-  constructor(producto, descripcion, precio_produccion, precio_venta, categoria) {
+  constructor(producto, stock, descripcion, precio_produccion, precio_venta, categoria) {
     this.producto = producto;
+    this.stock = stock;
     this.descripcion = descripcion;
     this.precio_produccion = precio_produccion;
     this.precio_venta = precio_venta;
@@ -24,7 +25,7 @@ module.exports = class Productos {
 
   async readProductos() {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT id_producto, producto, descripcion, precio_produccion, precio_venta, categoria FROM Productos', (error, results, fields) => {
+      connection.query('SELECT id_producto, producto, stock, descripcion, precio_produccion, precio_venta, categoria FROM Productos', (error, results, fields) => {
         if(error) throw error;
         resolve(results);
       });

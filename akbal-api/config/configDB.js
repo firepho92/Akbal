@@ -7,7 +7,7 @@ class Database {
       host: 'localhost',
       user: 'root',
       password: 'auza940220',
-      database: 'akbal'
+      database: 'Akbal'
     }
   }
 

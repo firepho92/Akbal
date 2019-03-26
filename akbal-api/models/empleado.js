@@ -22,7 +22,7 @@ module.exports = class Empleados {
 
   async readEmpleados() {
     return new Promise((resolve, reject) => {
-      connection.query('SELECT id_empleado, nombre, telefono, cargo FROM Empleados', (error, results, fields) => {
+      connection.query('SELECT id_empleado, nombre, telefono FROM Empleados', (error, results, fields) => {
         if(error) throw error;
         resolve(results);
       });
