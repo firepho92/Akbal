@@ -18,6 +18,19 @@ export default class Mesa extends React.Component {
     console.log(this.state.mesa);
   }
 
+  organizarElementos = () => {
+    let mesa = this.props.mesa;
+    let arr = [];
+    arr = mesa.elementos.map(elemento => (
+      ...elemento
+    ));
+    console.log(arr);
+  }
+
+  renderItems = () => {
+
+  }
+
   handleBackPress = () => {
     this.props.setVista(0);
     return true;

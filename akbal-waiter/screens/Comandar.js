@@ -1,12 +1,12 @@
 import React from 'react';
-import { Animated, BackHandler, Dimensions, StyleSheet, Text, View } from 'react-native';
-import { Button, Divider, List, Searchbar, TextInput, TouchableRipple} from 'react-native-paper';
+import { Animated, BackHandler, Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Button, Divider, List, Searchbar, TouchableRipple} from 'react-native-paper';
 import Fuse from 'fuse.js';
 
 import Theme from '../Theme';
-import { ScrollView } from 'react-native-gesture-handler';
 
-import Modal from './Modal.js';
+import Modal from './Modal';
+import Carrito from './Carrito';
 
 import AppContext from '../context/AppContext';
 
@@ -15,11 +15,11 @@ export default class Comandar extends React.Component {
     super(props);
     this.state = {
       query: '',
-      barra: true,
-      cocina: true,
+      notificar: false,
       modal: false,
       producto: null,
       cantidad: 0,
+      pedido: []
     }
     this.opciones = {
       shouldSort: true,
@@ -40,6 +40,25 @@ export default class Comandar extends React.Component {
 
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
+  }
+
+  alertar = () => {
+    let self = this;
+    this.setState({
+      notificar: !this.state.notificar
+    });
+    setTimeout(function() {
+      self.setState({
+        notificar: !self.state.notificar
+      });
+    }, 2500);
+  }
+
+  insertarPedido = (pedido) => {
+    this.setState({
+      pedido: [...this.state.pedido, pedido]
+    });
+    this.alertar();
   }
 
   handleBackPress = () => {
@@ -70,24 +89,12 @@ export default class Comandar extends React.Component {
     }
   }
 
-  toggleBarra = () => {
-    this.setState({
-      barra: !this.state.barra
-    });
-  }
-
-  toggleCocina = () => {
-    this.setState({
-      cocina: !this.state.cocina
-    });
-  }
-
   render() {
     return (
-      <View>
-        {this.state.modal ? <Modal modal={this.modal} elemento={this.state.producto} mesa={this.props.mesa}/> : null}
+      <View style={{height: Dimensions.get('window').height - 90}}>
+        {this.state.modal ? <Modal modal={this.modal} elemento={this.state.producto} mesa={this.props.mesa} insertarPedido={this.insertarPedido}/> : null}
         <View style={styles.container}>
-          <Text style={{fontSize: 20, textAlign: 'center', marginBottom: 5}}>{'Mesa: ' + this.props.mesa.nombre}</Text>
+          <Text onPress={() => this.alertar()} style={{fontSize: 20, textAlign: 'center', marginBottom: 5}}>{'Mesa: ' + this.props.mesa.nombre}</Text>
           <Searchbar
             style={{marginRight: 10, marginLeft: 10, marginBottom: 5}}
             placeholder="Buscar"
@@ -102,6 +109,7 @@ export default class Comandar extends React.Component {
             ))}
           </ScrollView>
         </View>
+        <Carrito mesa={this.props.mesa} pedido={this.state.pedido} notificar={this.state.notificar}/>
       </View>
     );
   }

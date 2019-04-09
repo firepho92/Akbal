@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+eimport React, { Component } from 'react'
 import {
   ActivityIndicator,
   StyleSheet,

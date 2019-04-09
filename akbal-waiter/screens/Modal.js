@@ -55,8 +55,11 @@ export default class Modal extends React.Component {
     this.socket.emit('pedido', elemento);
   }
 
-  handleSubmit = (callback) => {
-    let mesa = this.props.mesa;
+  handleSubmit = (/*callback*/) => {
+    let producto = this.props.elemento;
+    this.props.insertarPedido({producto: producto, cantidad: this.state.cantidad, nota: this.state.nota});
+    this.props.modal();
+    /*let mesa = this.props.mesa;
     let item = {producto: this.props.elemento, cantidad: this.state.cantidad, nota: this.state.nota};
     this.enviarPedido({...item, mesa: mesa});
     if(this.existeEnMesa(item)){
@@ -72,7 +75,7 @@ export default class Modal extends React.Component {
       mesa.elementos.push(item);
     }
     this.props.modal();
-    callback(mesa);
+    callback(mesa);*/
   }
 
   render() {
@@ -102,7 +105,7 @@ export default class Modal extends React.Component {
                   onChangeText={nota => this.setState({ nota })}
                 />
               </View>
-              <Button color="#3f51b5" mode="contained" onPress={() => this.handleSubmit(context.actualizarMesa)}>Aceptar</Button>
+              <Button color="#3f51b5" mode="contained" onPress={() => this.handleSubmit(/*context.actualizarMesa*/)}>Aceptar</Button>
             </View>
           </Animated.View>
         )}
